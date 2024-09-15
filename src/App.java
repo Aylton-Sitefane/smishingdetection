@@ -49,7 +49,6 @@ public class App {
         // App app = new App();
         // ArrayList<String> resultado = app.answer("Faz a transferência com emola sim nenhum não");
         
-        // // Exibir o resultado
         // System.out.println(resultado);
 
             try {
