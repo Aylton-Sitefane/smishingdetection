@@ -4,6 +4,8 @@ import weka.classifiers.trees.J48;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
+import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.StringToWordVector;
 
 public class MessageRule {
 
@@ -15,14 +17,17 @@ public class MessageRule {
     }
 
     public Instance getInstance() {
-        return instance;
+        return this.instance;
     }
 
-    public String isSmisging(Instances datasetSmish, String message, J48 classifier) throws Exception {
-        this.instance.setValue(datasetSmish.attribute(1), message);
-        this.instance.setDataset(datasetSmish);
+    public String isSmisging(Instances datasetSmish, String message, J48 classifier, StringToWordVector filter) throws Exception {
+        Instances filteredDatInstances = Filter.useFilter(datasetSmish, filter);
+        
+        this.instance = new DenseInstance(filteredDatInstances.numAttributes());
+        this.instance.setValue(datasetSmish.attribute(0), message);
+        this.instance.setDataset(filteredDatInstances);
 
-        double result = classifier.classifyInstance(instance);
+        double result = classifier.classifyInstance(this.instance);
         return datasetSmish.classAttribute().value((int) result);
     }
 

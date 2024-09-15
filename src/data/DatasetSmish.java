@@ -3,8 +3,8 @@ import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
 public class DatasetSmish {
-    private static Instances dataInstance;
-    private static DataSource dataSource;
+    private Instances dataInstance;
+    private DataSource dataSource;
 
     public DatasetSmish(String filePath) throws Exception{
         setDataSource(filePath);
@@ -23,7 +23,7 @@ public class DatasetSmish {
     public void setDataSource(String filePath) throws Exception{
         this.dataSource = new DataSource(filePath);
         this.dataInstance = dataSource.getDataSet();
-        this.dataInstance.setClassIndex(0);
+        this.dataInstance.setClassIndex(this.dataInstance.numAttributes() - 1);
 
     }
 

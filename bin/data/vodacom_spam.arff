@@ -1,0 +1,44 @@
+@relation vodacom_spam
+
+@attribute inicio_mensagem {Aquele_valor, Usa_este_número, Pode_mandar_neste_numero, Pode_transferir_via, Pode_mandar_com, Faz_a_transferência_com}
+@attribute tipo_carteira {mpesa, emola, nenhum}
+@attribute menciona_numero {sim, não}
+@attribute referencia_nome {sai_nome_de, em_nome_de, vem_nome_de, nenhum}
+@attribute menciona_nome {sim, não}
+@attribute classe {spam, nao_spam}
+
+@data
+Pode_transferir_via, mpesa, sim, sai_nome_de, sim, spam
+Faz_a_transferência_com, emola, sim, vem_nome_de, sim, spam
+Pode_transferir_via, emola, sim, nenhum, sim, spam
+Faz_a_transferência_com, mpesa, sim, nenhum, sim, spam
+Pode_transferir_via, emola, sim, vem_nome_de, sim, spam
+Pode_mandar_com, mpesa, sim, vem_nome_de, sim, spam
+Pode_transferir_via, emola, não, nenhum, não, nao_spam
+Pode_mandar_com, emola, não, vem_nome_de, não, nao_spam
+Pode_transferir_via, mpesa, sim, sai_nome_de, sim, spam
+Pode_mandar_com, emola, não, vem_nome_de, não, nao_spam
+Pode_transferir_via, emola, não, nenhum, não, nao_spam
+Faz_a_transferência_com, mpesa, sim, vem_nome_de, sim, spam
+Pode_transferir_via, emola, sim, em_nome_de, sim, spam
+Pode_mandar_com, mpesa, não, nenhum, não, nao_spam
+Pode_transferir_via, emola, sim, vem_nome_de, sim, spam
+Faz_a_transferência_com, emola, sim, nenhum, não, nao_spam
+Pode_transferir_via, mpesa, sim, vem_nome_de, sim, spam
+Faz_a_transferência_com, mpesa, sim, sai_nome_de, sim, spam
+Pode_transferir_via, emola, sim, vem_nome_de, sim, spam
+Pode_mandar_com, mpesa, não, nenhum, não, nao_spam
+Faz_a_transferência_com, emola, não, vem_nome_de, não, nao_spam
+Pode_transferir_via, emola, sim, vem_nome_de, sim, spam
+Aquele_valor, emola, sim, vem_nome_de, sim, spam
+Aquele_valor, mpesa, sim, sai_nome_de, sim, spam
+Aquele_valor, mpesa, não, vem_nome_de, não, nao_spam
+Aquele_valor, emola, sim, nenhum, não, nao_spam
+Usa_este_número, mpesa, sim, em_nome_de, sim, spam
+Usa_este_número, emola, sim, vem_nome_de, sim, spam
+Pode_mandar_neste_numero, mpesa, sim, vem_nome_de, sim, spam
+Pode_mandar_neste_numero, emola, sim, sai_nome_de, sim, spam
+Pode_transferir_via, mpesa, não, nenhum, não, nao_spam
+Pode_transferir_via, emola, sim, em_nome_de, sim, spam
+Pode_mandar_com, mpesa, sim, vem_nome_de, sim, spam
+Pode_mandar_com, emola, não, vem_nome_de, não, nao_spam
