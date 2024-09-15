@@ -7,12 +7,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class J48SpamClassifier {
+public class J48SmishingClassifier {
 
     private J48 classifier;
     private Instances datasetStructure;
 
-    public J48SpamClassifier(String arffFilePath) throws Exception {
+    public J48SmishingClassifier(String arffFilePath) throws Exception {
 
         ArffLoader loader = new ArffLoader();
         loader.setFile(new File(arffFilePath));
@@ -91,7 +91,7 @@ public class J48SpamClassifier {
 
     public static void main(String[] args) {
         try {
-            J48SpamClassifier classifier = new J48SpamClassifier("vodacom_spam.arff");
+            J48SmishingClassifier classifier = new J48SmishingClassifier("vodacom_spam.arff");
 
             String structuredMessage = "Pode_transferir_via mpesa sim nenhum sim"; 
             String unstructuredMessage = "Pode transferir via mpesa sai nome de sim"; 

@@ -53,7 +53,7 @@ public class App {
         // System.out.println(resultado);
 
             try {
-                J48SpamClassifier classifier = new J48SpamClassifier("./data/vodacom_spam.arff");
+                J48SmishingClassifier classifier = new J48SmishingClassifier("./data/vodacom_spam.arff");
     
                 String structuredMessage = "Pode_transferir_via mpesa sim nenhum sim"; 
                 String unstructuredMessage = "Pode transferir via mpesa sai nome de sim"; 
