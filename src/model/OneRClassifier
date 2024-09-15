@@ -23,7 +23,6 @@ public class OneRClassifier {
         String sms = "Pode_transferir_via, mpesa, sim, sai_nome_de, sim"; 
         Map<String, Double> attributes = SMSPreprocessor.preprocessSMS(sms);
 
-        // Criar a estrutura da instância
         FastVector attributesVector = new FastVector();
         for (Attribute attr : dataset.enumerateAttributes()) {
             attributesVector.addElement(attr);
@@ -50,7 +49,6 @@ public class OneRClassifier {
         Instance testInstance = new DenseInstance(1.0, values);
         testSet.add(testInstance);
 
-        // Classificar a SMS
         double label = oneR.classifyInstance(testInstance);
         System.out.println("A SMS é classificada como: " + testSet.classAttribute().value((int) label));
     }
