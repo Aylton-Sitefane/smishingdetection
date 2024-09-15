@@ -1,36 +1,26 @@
 package config;
 
-import weka.classifiers.trees.J48;
-import weka.core.DenseInstance;
-import weka.core.Instance;
-import weka.core.Instances;
-import weka.filters.Filter;
-import weka.filters.unsupervised.attribute.StringToWordVector;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class MessageRule {
 
-    Instance instance;
+    public static Map<String, Double> preprocessSMS(String sms) {
+        Map<String, Double> attributes = new HashMap<>();
 
-    public MessageRule() {
-        this.instance = new DenseInstance(2);
-
-    }
-
-    public Instance getInstance() {
-        return this.instance;
-    }
-
-    public String isSmisging(Instances datasetSmish, String message, J48 classifier, StringToWordVector filter) throws Exception {
-        Instances filteredDatInstances = Filter.useFilter(datasetSmish, filter);
+        String[] keywords = {"Pode_transferir_via", "Faz_a_transferência_com", "Pode_mandar_com", "Aquele_valor", "Usa_este_número", "Pode_mandar_neste_numero"};
         
-        this.instance = new DenseInstance(filteredDatInstances.numAttributes());
-        this.instance.setValue(datasetSmish.attribute(0), message);
-        this.instance.setDataset(filteredDatInstances);
+        for (String keyword : keywords) {
+            if (sms.contains(keyword)) {
+                attributes.put(keyword, 1.0);
+            } else {
+                attributes.put(keyword, 0.0);
+            }
+        }
 
-        double result = classifier.classifyInstance(this.instance);
-        return datasetSmish.classAttribute().value((int) result);
+        return attributes;
     }
-
     
     
     

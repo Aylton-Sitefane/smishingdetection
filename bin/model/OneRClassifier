@@ -1,0 +1,76 @@
+import weka.core.Instances;
+import weka.core.converters.ConverterUtils.DataSource;
+import weka.classifiers.rules.OneR;
+import weka.core.DenseInstance;
+import weka.core.Attribute;
+import weka.core.FastVector;
+import weka.core.Instance;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class SMSClassifier {
+    public static void main(String[] args) throws Exception {
+        DataSource source = new DataSource("../data/vodacom_spam.arff");
+        Instances dataset = source.getDataSet();
+        
+        if (dataset.classIndex() == -1)
+            dataset.setClassIndex(dataset.numAttributes() - 1);
+
+        OneR oneR = new OneR();
+        oneR.buildClassifier(dataset);
+
+        String sms = "Pode_transferir_via, mpesa, sim, sai_nome_de, sim"; 
+        Map<String, Double> attributes = SMSPreprocessor.preprocessSMS(sms);
+
+        // Criar a estrutura da instância
+        FastVector attributesVector = new FastVector();
+        for (Attribute attr : dataset.enumerateAttributes()) {
+            attributesVector.addElement(attr);
+        }
+        FastVector classValues = new FastVector();
+        classValues.addElement("spam");
+        classValues.addElement("nao_spam");
+        Attribute classAttribute = new Attribute("classe", classValues);
+        attributesVector.addElement(classAttribute);
+        Instances testSet = new Instances("TestSet", attributesVector, 1);
+        testSet.setClassIndex(testSet.numAttributes() - 1);
+
+
+        double[] values = new double[testSet.numAttributes()];
+        int index = 0;
+        for (Attribute attr : dataset.enumerateAttributes()) {
+            if (attributes.containsKey(attr.name())) {
+                values[index++] = attributes.get(attr.name());
+            } else {
+                values[index++] = 0.0; 
+            }
+        }
+        values[testSet.numAttributes() - 1] = testSet.attribute(testSet.numAttributes() - 1).indexOfValue("spam"); 
+        Instance testInstance = new DenseInstance(1.0, values);
+        testSet.add(testInstance);
+
+        // Classificar a SMS
+        double label = oneR.classifyInstance(testInstance);
+        System.out.println("A SMS é classificada como: " + testSet.classAttribute().value((int) label));
+    }
+}
+
+class SMSPreprocessor {
+    public static Map<String, Double> preprocessSMS(String sms) {
+        Map<String, Double> attributes = new HashMap<>();
+
+        String[] keywords = {"Pode_transferir_via", "Faz_a_transferência_com", "Pode_mandar_com", "Aquele_valor", "Usa_este_número", "Pode_mandar_neste_numero"};
+        
+        for (String keyword : keywords) {
+            if (sms.contains(keyword)) {
+                attributes.put(keyword, 1.0);
+            } else {
+                attributes.put(keyword, 0.0);
+            }
+        }
+
+
+        return attributes;
+    }
+}
