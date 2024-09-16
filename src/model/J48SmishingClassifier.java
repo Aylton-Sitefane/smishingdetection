@@ -1,3 +1,4 @@
+package model;
 import weka.classifiers.trees.J48;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
@@ -81,7 +82,7 @@ public class J48SmishingClassifier {
             }
             return result.toString();
         } else {
-            return "Mensagem não estruturada para o modelo.";
+            return "Nao spam.";
         }
     }
 

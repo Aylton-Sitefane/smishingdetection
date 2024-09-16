@@ -1,56 +1,10 @@
-import java.util.*;
+import model.J48SmishingClassifier;
+import model.OneRClassifier;
 
 public class App {
-    public ArrayList<String> answer(String mensagem) {
-        String[] palavrasChave = {"Aquele", "Faz", "a", "transferência", "Pode", "transferir", "sim", "não", "valor", "mandar", "neste", "este", "sai", "nome", "vem"};
-        String[] carteiras = {"mpesa", "emola"};
-        
-        Set<String> conjuntoPalavrasChave = new HashSet<>(Arrays.asList(palavrasChave));
-        Set<String> conjuntoCarteiras = new HashSet<>(Arrays.asList(carteiras));
-        ArrayList<String> finalResult = new ArrayList<>();
-        
-        // Separar a mensagem em palavras
-        String[] palavras = mensagem.split("\\s+|,\\s*|\\.\\s*");
-        
-        StringBuilder novaString = new StringBuilder();
-        
-        boolean carteiraEncontrada = false;
-        for (String palavra : palavras) {
-            if (conjuntoPalavrasChave.contains(palavra)) {
-                if (palavra.equals("sim") || palavra.equals("não")) {
-                    novaString.append(palavra).append(",");
-                } else {
-                    novaString.append(palavra).append("_");
-                }
-            } else if (conjuntoCarteiras.contains(palavra)) {
-                novaString.append(palavra).append(",");
-                carteiraEncontrada = true;
-            } else {
-                novaString.append(palavra).append(", ");
-            }
-        }
-        
-        // Corrigir a formatação final
-        String resultado = novaString.toString().trim();
-        if (resultado.endsWith("_")) {
-            resultado = resultado.substring(0, resultado.length() - 1); 
-        } else if (resultado.endsWith(", ")) {
-            resultado = resultado.substring(0, resultado.length() - 2); 
-        }
-        
-        // Adicionar cada segmento ao ArrayList finalResult
-        String[] segmentos = resultado.split(",\\s*");
-        Collections.addAll(finalResult, segmentos);
-        
-        return finalResult;
-    }
-
+    
     public static void main(String[] args) {
-        // App app = new App();
-        // ArrayList<String> resultado = app.answer("Faz a transferência com emola sim nenhum não");
-        
-        // System.out.println(resultado);
-
+    
             try {
                 J48SmishingClassifier classifier = new J48SmishingClassifier("./data/vodacom_spam.arff");
     
@@ -62,6 +16,8 @@ public class App {
     
                 String result2 = classifier.classifyMessage(unstructuredMessage);
                 System.out.println("A mensagem não estruturada é: " + result2);
+
+                OneRClassifier oneR = new OneRClassifier();
     
             } catch (Exception e) {
                 e.printStackTrace();
